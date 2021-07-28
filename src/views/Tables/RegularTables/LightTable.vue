@@ -36,7 +36,6 @@
     </b-card>
 </template>
 <script>
-  import projects from './../projects'
   import { Table, TableColumn} from 'element-ui'
   export default {
     name: 'light-table',
@@ -46,13 +45,12 @@
     },
     data() {
       return {
-        persons: [],
         currentPage: 1
       };
     },
     computed: {
       augmentedPersons: function () {
-        return this.persons.map(p => {
+        return this.$store.getters.allPersons.map(p => {
           switch(p.status) {
             case "ACTIVE":
               p.statusType = "success"
@@ -74,9 +72,7 @@
       }
     },
     mounted () {
-      this.$http
-        .get('/persons')
-        .then(response => (this.persons = response.data))
+      this.$store.dispatch("getPersons");
     },
   }
 </script>

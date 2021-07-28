@@ -24,12 +24,13 @@ import { dom } from '@fortawesome/fontawesome-svg-core'
 // router setup
 import router from './routes/router';
 import axios from "axios";
+
+dom.watch()
 // plugin setup
 Vue.use(DashboardPlugin);
 Vue.use(Vuex)
 
-
-ApiService.init();
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.prototype.$http = axios.create({
   baseURL: 'http://localhost:8081',
