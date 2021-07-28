@@ -17,7 +17,10 @@
 import Vue from 'vue';
 import DashboardPlugin from './plugins/dashboard-plugin';
 import App from './App.vue';
-
+import store from './store'
+import Vuex from 'vuex'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { dom } from '@fortawesome/fontawesome-svg-core'
 // router setup
 import router from './routes/router';
 import axios from "axios";

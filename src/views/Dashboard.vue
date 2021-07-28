@@ -5,10 +5,10 @@
       <!-- Card stats -->
       <b-row>
         <b-col xl="3" md="6">
-          <stats-card title="Total traffic"
-                      type="gradient-red"
+          <stats-card title="Total hours"
+                      type="gradient-green"
                       sub-title="350,897"
-                      icon="ni ni-active-40"
+                      icon="fas fa-hourglass-end"
                       class="mb-4">
 
             <template slot="footer">
@@ -18,10 +18,10 @@
           </stats-card>
         </b-col>
         <b-col xl="3" md="6">
-          <stats-card title="Total traffic"
-                      type="gradient-orange"
+          <stats-card title="Total persons"
+                      type="gradient-blue"
                       sub-title="2,356"
-                      icon="ni ni-chart-pie-35"
+                      icon="fas fa-swimmer"
                       class="mb-4">
 
             <template slot="footer">
@@ -31,10 +31,10 @@
           </stats-card>
         </b-col>
         <b-col xl="3" md="6">
-          <stats-card title="Sales"
-                      type="gradient-green"
+          <stats-card title="Rescues"
+                      type="gradient-red"
                       sub-title="924"
-                      icon="ni ni-money-coins"
+                      icon="far fa-life-ring"
                       class="mb-4">
 
             <template slot="footer">
@@ -45,10 +45,10 @@
 
         </b-col>
         <b-col xl="3" md="6">
-          <stats-card title="Performance"
-                      type="gradient-info"
-                      sub-title="49,65%"
-                      icon="ni ni-chart-bar-32"
+          <stats-card title="First Aid"
+                      type="gradient-orange"
+                      sub-title="49,65"
+                      icon="fas fa-medkit"
                       class="mb-4">
 
             <template slot="footer">
