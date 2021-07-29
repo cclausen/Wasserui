@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Header -->
-    <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9">
+    <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
       <b-container class="container">
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
@@ -25,7 +25,7 @@
       <!-- Table -->
       <b-row class="justify-content-center">
         <b-col lg="6" md="8" >
-          <b-card no-body class="bg-secondary border-0">
+          <b-card no-body class="bg-light border-0">
             <b-card-header class="bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
               <div class="text-center">
@@ -112,6 +112,7 @@
     methods: {
       onSubmit() {
         // this will be called only after form is valid. You can do an api call here to register users
+        this.$store.dispatch('addPerson', {})
       }
     }
 

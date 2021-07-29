@@ -13,23 +13,6 @@
         </sidebar-item>
 
         <sidebar-item
-            :link="{
-              name: 'Icons',
-              path: '/icons',
-              icon: 'ni ni-planet text-blue'
-              }"
-            >
-        </sidebar-item>
-
-        <sidebar-item
-              :link="{
-                name: 'Maps',
-                path: '/maps',
-                icon: 'ni ni-pin-3 text-orange'
-              }">
-        </sidebar-item>
-
-        <sidebar-item
               :link="{
                 name: 'User Profile',
                 path: '/profile',
@@ -75,49 +58,48 @@
   </div>
 </template>
 <script>
-  /* eslint-disable no-new */
-  import PerfectScrollbar from 'perfect-scrollbar';
-  import 'perfect-scrollbar/css/perfect-scrollbar.css';
+/* eslint-disable no-new */
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
+import DashboardNavbar from './DashboardNavbar.vue';
+import ContentFooter from './ContentFooter.vue';
+import DashboardContent from './Content.vue';
+import {FadeTransition} from 'vue2-transitions';
 
-  function hasElement(className) {
-    return document.getElementsByClassName(className).length > 0;
+function hasElement(className) {
+  return document.getElementsByClassName(className).length > 0;
+}
+
+function initScrollbar(className) {
+  if (hasElement(className)) {
+    new PerfectScrollbar(`.${className}`);
+  } else {
+    // try to init it later in case this component is loaded async
+    setTimeout(() => {
+      initScrollbar(className);
+    }, 100);
   }
+}
 
-  function initScrollbar(className) {
-    if (hasElement(className)) {
-      new PerfectScrollbar(`.${className}`);
-    } else {
-      // try to init it later in case this component is loaded async
-      setTimeout(() => {
-        initScrollbar(className);
-      }, 100);
-    }
-  }
-
-  import DashboardNavbar from './DashboardNavbar.vue';
-  import ContentFooter from './ContentFooter.vue';
-  import DashboardContent from './Content.vue';
-  import { FadeTransition } from 'vue2-transitions';
-
-  export default {
-    components: {
-      DashboardNavbar,
-      ContentFooter,
-      DashboardContent,
-      FadeTransition
-    },
-    methods: {
-      initScrollbar() {
-        let isWindows = navigator.platform.startsWith('Win');
-        if (isWindows) {
-          initScrollbar('sidenav');
-        }
+export default {
+  components: {
+    DashboardNavbar,
+    ContentFooter,
+    DashboardContent,
+    FadeTransition
+  },
+  methods: {
+    initScrollbar() {
+      let isWindows = navigator.platform.startsWith('Win');
+      if (isWindows) {
+        initScrollbar('sidenav');
       }
-    },
-    mounted() {
-      this.initScrollbar()
     }
-  };
+  },
+  mounted() {
+    this.initScrollbar()
+  }
+};
 </script>
 <style lang="scss">
 </style>
