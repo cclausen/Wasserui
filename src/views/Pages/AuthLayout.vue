@@ -9,7 +9,7 @@
     >
       <div slot="brand" class="navbar-wrapper">
         <b-navbar-brand to="/">
-          <img src="img/brand/white.png">
+          <img src="img/brand/WasserLogo.png">
         </b-navbar-brand>
       </div>
 
@@ -18,7 +18,7 @@
          <b-row>
            <b-col cols="6" class="collapse-brand">
              <router-link to="/">
-               <img src="img/brand/green.png">
+               <img src="img/brand/WasserLogo.png">
              </router-link>
            </b-col>
            <b-col cols="6" class="collapse-close">
@@ -89,30 +89,30 @@
   </div>
 </template>
 <script>
-  import { BaseNav } from '@/components';
-  import { ZoomCenterTransition } from 'vue2-transitions';
+import {BaseNav} from '@/components';
+import {ZoomCenterTransition} from 'vue2-transitions';
 
-  export default {
-    components: {
-      BaseNav,
-      ZoomCenterTransition
-    },
-    props: {
-      backgroundColor: {
-        type: String,
-        default: 'black'
-      }
-    },
-    data() {
-      return {
-        showMenu: false,
-        menuTransitionDuration: 250,
-        pageTransitionDuration: 200,
-        year: new Date().getFullYear(),
-        pageClass: 'login-page'
-      };
-    },
-    computed: {
+export default {
+  components: {
+    BaseNav,
+    ZoomCenterTransition
+  },
+  props: {
+    backgroundColor: {
+      type: String,
+      default: 'black'
+    }
+  },
+  data() {
+    return {
+      showMenu: false,
+      menuTransitionDuration: 250,
+      pageTransitionDuration: 200,
+      year: new Date().getFullYear(),
+      pageClass: 'login-page'
+    };
+  },
+  computed: {
       title() {
         return `${this.$route.name} Page`;
       }

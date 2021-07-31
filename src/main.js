@@ -19,8 +19,8 @@ import DashboardPlugin from './plugins/dashboard-plugin';
 import App from './App.vue';
 import store from './store'
 import Vuex from 'vuex'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { dom } from '@fortawesome/fontawesome-svg-core'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {dom} from '@fortawesome/fontawesome-svg-core'
 // router setup
 import router from './routes/router';
 import axios from "axios";
@@ -38,6 +38,8 @@ Vue.prototype.$http = axios.create({
     'Content-Type': 'application/json'
   }
 })
+
+axios.defaults.withCredentials = true
 
 /* eslint-disable no-new */
 new Vue({ // NOSONAR we need a new here

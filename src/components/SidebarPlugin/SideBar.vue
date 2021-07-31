@@ -73,19 +73,19 @@
     </nav>
 </template>
 <script>
-  import NavbarToggleButton from '@/components/NavbarToggleButton'
+import NavbarToggleButton from '@/components/NavbarToggleButton'
 
-  export default {
-    name: 'sidebar',
-    components: {
-      NavbarToggleButton
+export default {
+  name: 'sidebar',
+  components: {
+    NavbarToggleButton
+  },
+  props: {
+    logo: {
+      type: String,
+      default: 'img/brand/WasserLogo.png',
+      description: 'Sidebar app logo'
     },
-    props: {
-      logo: {
-        type: String,
-        default: 'img/brand/green.png',
-        description: 'Sidebar app logo'
-      },
       autoClose: {
         type: Boolean,
         default: true,
