@@ -59,7 +59,7 @@
                               prepend-icon="ni ni-email-83"
                               placeholder="Email"
                               name="Email"
-                              :rules="{required: true, email: true}"
+                              :rules="{required: true}"
                               v-model="model.email">
                   </base-input>
 

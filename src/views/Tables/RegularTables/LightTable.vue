@@ -36,43 +36,48 @@
     </b-card>
 </template>
 <script>
-  import { Table, TableColumn} from 'element-ui'
-  export default {
-    name: 'light-table',
-    components: {
-      [Table.name]: Table,
-      [TableColumn.name]: TableColumn
-    },
-    data() {
-      return {
-        currentPage: 1
-      };
-    },
-    computed: {
-      augmentedPersons: function () {
-        return this.$store.getters.allPersons.map(p => {
-          switch(p.status) {
-            case "ACTIVE":
-              p.statusType = "success"
-              break
-            case "RETIRED":
-              p.statusType = "dark"
-              break
-            case "ILL":
-              p.statusType = "danger"
-              break
-            case "PRESENT":
-              p.statusType = "warning"
-              break
-            default:
-              p.statusType = "light"
-          }
-          return p
-        })
-      }
-    },
-    mounted () {
-      this.$store.dispatch("getPersons");
-    },
+import { Table, TableColumn } from 'element-ui'
+import { mapGetters } from 'vuex'
+
+export default {
+  name: 'light-table',
+  components: {
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn
+  },
+  data () {
+    return {
+      currentPage: 1
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'person/getAllPersons'
+    ]),
+    augmentedPersons: function () {
+      return this['person/getAllPersons'].map(p => {
+        switch (p.status) {
+          case 'ACTIVE':
+            p.statusType = 'success'
+            break
+          case 'RETIRED':
+            p.statusType = 'dark'
+            break
+          case 'ILL':
+            p.statusType = 'danger'
+            break
+          case 'PRESENT':
+            p.statusType = 'warning'
+            break
+          default:
+            p.statusType = 'light'
+        }
+        return p
+      })
+    }
+  },
+  mounted () {
+    this.$store.dispatch('person/getAllPersons')
   }
+}
 </script>

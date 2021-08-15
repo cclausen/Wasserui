@@ -14,32 +14,38 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Vue from 'vue';
-import DashboardPlugin from './plugins/dashboard-plugin';
-import App from './App.vue';
+import Vue from 'vue'
+import DashboardPlugin from './plugins/dashboard-plugin'
+import App from './App.vue'
 import store from './store'
 import Vuex from 'vuex'
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {dom} from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { dom } from '@fortawesome/fontawesome-svg-core'
 // router setup
-import router from './routes/router';
-import axios from "axios";
+import router from './routes/router'
+import axios from 'axios'
 
 dom.watch()
 // plugin setup
-Vue.use(DashboardPlugin);
+Vue.use(DashboardPlugin)
 Vue.use(Vuex)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-Vue.prototype.$http = axios.create({
+let axiosInstance = axios.create({
   baseURL: 'http://localhost:8081',
   headers: {
     'Content-Type': 'application/json'
   }
 })
+axiosInstance.interceptors.request.use(config => {
+  config.headers.common['header1'] = 'authHeader()'
+  return config
+})
+Vue.prototype.$http = axiosInstance
 
 axios.defaults.withCredentials = true
+
 
 /* eslint-disable no-new */
 new Vue({ // NOSONAR we need a new here
@@ -47,4 +53,4 @@ new Vue({ // NOSONAR we need a new here
   render: h => h(App),
   router,
   store
-});
+})
