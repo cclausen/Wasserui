@@ -4,6 +4,7 @@ import Vue from 'vue'
 import { API_URL } from '@/common/config'
 import { auth } from './auth.module'
 import { person } from './person.module'
+import { presence } from './presence.module'
 import router from '@/routes/router'
 
 //load Vuex
@@ -86,6 +87,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     person,
+    presence,
     state,
     getters,
     actions,

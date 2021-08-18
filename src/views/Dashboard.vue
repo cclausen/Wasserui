@@ -2,7 +2,7 @@
   <div>
 
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary">
-      <!-- Card stats -->
+    <!-- Card stats -->
       <b-row>
         <b-col xl="3" md="6">
           <stats-card title="Total hours"
@@ -60,9 +60,53 @@
       </b-row>
     </base-header>
 
-    <!--Charts-->
     <b-container fluid class="mt--7">
       <b-row>
+        <b-col>
+          <b-card
+            title="Anwesend">
+            <b-card-text>
+              <span v-if="presentPersons.length === 0">Niemand anwesend</span>
+              <ul>
+                <li v-for="person in presentPersons" :key="person.id">
+                  {{ person.firstname + ' ' + person.lastname }}
+                </li>
+              </ul>
+              <base-button v-b-modal.arrivalModal block type="success"><i class="fas fa-user-plus" aria-hidden="true"/>
+                Retter angekommen
+              </base-button>
+              <b-modal id="arrivalModal" title="Welcher Retter ist angekommen?">
+                <span v-if="notPresentPersons.length === 0">Kein verfügbarer Retter gefunden</span>
+                <base-button block type="success" v-for="person in notPresentPersons" :key="person.id"
+                             @click="startPresence(person)">
+                      <span class="btn-inner--icon"><i class="fas fa-plus" aria-hidden="true"/>
+                        {{ person.firstname + ' ' + person.lastname }}
+                      </span>
+                </base-button>
+              </b-modal>
+            </b-card-text>
+          </b-card>
+        </b-col>
+        <b-col>
+          <b-card
+            title="Einsätze">
+            <b-card-text>
+              <span v-if="operations.length === 0">Noch keine Einsätze</span>
+              <ul>
+                <li v-for="operation in operations" :key="operation.id">
+                  {{ operation.name }}
+                </li>
+              </ul>
+              <base-button v-b-modal.operationModal block type="primary">
+                <i class="fas fa-first-aid" aria-hidden="true"/>
+                Einsatz eintragen
+              </base-button>
+              <b-modal id="operationModal" title="New message to undefined">
+                <p class="my-4">...</p>
+              </b-modal>
+            </b-card-text>
+          </b-card>
+        </b-col>
         <b-col xl="8" class="mb-5 mb-xl-0">
           <card type="default" header-classes="bg-transparent">
             <b-row align-v="center" slot="header">
@@ -73,12 +117,12 @@
               <b-col>
                 <b-nav class="nav-pills justify-content-end">
                   <b-nav-item
-                       class="mr-2 mr-md-0"
-                       :active="bigLineChart.activeIndex === 0"
-                       link-classes="py-2 px-3"
-                       @click.prevent="initBigChart(0)">
-                      <span class="d-none d-md-block">Month</span>
-                      <span class="d-md-none">M</span>
+                    class="mr-2 mr-md-0"
+                    :active="bigLineChart.activeIndex === 0"
+                    link-classes="py-2 px-3"
+                    @click.prevent="initBigChart(0)">
+                    <span class="d-none d-md-block">Month</span>
+                    <span class="d-md-none">M</span>
                   </b-nav-item>
                   <b-nav-item
                     link-classes="py-2 px-3"
@@ -107,43 +151,57 @@
 </template>
 <script>
 // Charts
-import * as chartConfigs from '@/components/Charts/config';
-import LineChart from '@/components/Charts/LineChart';
-import BarChart from '@/components/Charts/BarChart';
+import * as chartConfigs from '@/components/Charts/config'
+import LineChart from '@/components/Charts/LineChart'
+import BarChart from '@/components/Charts/BarChart'
 
 // Components
-import BaseProgress from '@/components/BaseProgress';
-import StatsCard from '@/components/Cards/StatsCard';
+import BaseProgress from '@/components/BaseProgress'
+import StatsCard from '@/components/Cards/StatsCard'
+import { mapGetters } from 'vuex'
+
 
 export default {
   components: {
     LineChart,
     BarChart,
     BaseProgress,
-    StatsCard,
+    StatsCard
   },
-  data() {
+  data () {
     return {
       bigLineChart: {
         allData: [
-          [0, 20, 10, 30, 15, 40, 20, 60, 60, 80, 90, 110],
+          [0, 20, 10, 30, 15, 40, 20, 60, 60, 80, 90, 110]
         ],
         activeIndex: 0,
         chartData: {
           datasets: [
             {
               label: 'Performance',
-              data: [0, 20, 10, 30, 15, 40, 20, 60, 60],
+              data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
             }
           ],
-          labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         },
-        extraOptions: chartConfigs.blueChartOptions,
-      }
-    };
+        extraOptions: chartConfigs.blueChartOptions
+      },
+      operations: []
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'person/getAllPersons'
+    ]),
+    presentPersons: function () {
+      return this['person/getAllPersons'].filter(p => p.status === 'PRESENT')
+    },
+    notPresentPersons: function () {
+      return this['person/getAllPersons'].filter(p => p.status !== 'PRESENT')
+    }
   },
   methods: {
-    initBigChart(index) {
+    initBigChart (index) {
       this.bigLineChart.chartData = {
         datasets: [
           {
@@ -151,13 +209,17 @@ export default {
             data: this.bigLineChart.allData[index]
           }
         ],
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      };
-      this.bigLineChart.activeIndex = index;
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      }
+      this.bigLineChart.activeIndex = index
+    },
+    startPresence (person) {
+      this.$store.dispatch('presence/start', { personId: person.id, placeId: 1 })
     }
   },
   mounted() {
-    this.initBigChart(0);
+    this.$store.dispatch('person/getAllPersons')
+    this.initBigChart(0)
   }
 };
 </script>
