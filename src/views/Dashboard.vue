@@ -194,10 +194,10 @@ export default {
       'person/getAllPersons'
     ]),
     presentPersons: function () {
-      return this['person/getAllPersons'].filter(p => p.status === 'PRESENT')
+      return this['person/getAllPersons'].filter(p => p.presence)
     },
     notPresentPersons: function () {
-      return this['person/getAllPersons'].filter(p => p.status !== 'PRESENT')
+      return this['person/getAllPersons'].filter(p => p.status !== 'ILL' && p.status !== 'RETIRED')
     }
   },
   methods: {
